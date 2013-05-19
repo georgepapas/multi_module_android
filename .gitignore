@@ -1,0 +1,8 @@
+// IntelliJ Project file configuration
+*.iml
+*.ipr
+*.iws
+
+.DS_Store
+
+target/
