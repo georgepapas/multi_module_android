@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -14,11 +14,8 @@
   <packaging>apk</packaging>
 
   <properties>
-      <!--
-        When not running a release, we are deploying the plain artifact (so no classifier)
-        This is overridden during the release.
-      -->
-      <zipaligned-classifier></zipaligned-classifier>
+    <zipaligned-classifier></zipaligned-classifier>
+    <spoon.version>1.0.3</spoon.version>
   </properties>
 
   <dependencies>
@@ -27,29 +24,40 @@
       <artifactId>android</artifactId>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>com.google.android</groupId>
       <artifactId>android-test</artifactId>
+      <scope>provided</scope>
       <version>${android.version}</version>
     </dependency>
+
     <dependency>
       <groupId>com.hsp</groupId>
       <artifactId>drdroid</artifactId>
       <type>apk</type>
       <version>${project.version}</version>
       <scope>provided</scope>
-      <!--<classifier>${zipaligned-classifier}</classifier> &lt;!&ndash;  classifier set according to the ran profile &ndash;&gt;-->
     </dependency>
+
     <dependency>
       <groupId>com.hsp</groupId>
       <artifactId>drdroid</artifactId>
       <type>jar</type>
       <version>${project.version}</version>
     </dependency>
+
     <dependency>
-       <groupId>junit</groupId>
-       <artifactId>junit</artifactId>
-     </dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.squareup.spoon</groupId>
+      <artifactId>spoon-client</artifactId>
+      <version>${spoon.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -68,6 +76,25 @@
           </sdk>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>com.squareup.spoon</groupId>
+        <artifactId>spoon-maven-plugin</artifactId>
+        <version>${spoon.version}</version>
+        <configuration>
+          <title>Android Multi Module Maven Sample App</title>
+          <debug>true</debug>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 
