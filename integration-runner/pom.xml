@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <spoon.version>1.0.3</spoon.version>
+        <project.integrationId>drdroid-integration-tests</project.integrationId>
+    </properties>
+
+    <parent>
+        <groupId>com.hsp</groupId>
+        <artifactId>drdroid-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>drdroid-integration-runner</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>apk</packaging>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+            <version>${android-support.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android-test</artifactId>
+            <scope>provided</scope>
+            <version>${android.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.spoon</groupId>
+            <artifactId>spoon-client</artifactId>
+            <version>${spoon.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${project.integrationId}</artifactId>
+            <type>apk</type>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${project.integrationId}</artifactId>
+            <type>jar</type>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>spoon</id>
+
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>com.squareup.spoon</groupId>
+                        <artifactId>spoon-maven-plugin</artifactId>
+                        <version>${spoon.version}</version>
+                        <configuration>
+                            <title>Dr Droid</title>
+                            <debug>true</debug>
+                            <failOnFailure>true</failOnFailure>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+
+                <configuration>
+                    <testSkip>true</testSkip>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+</project>
